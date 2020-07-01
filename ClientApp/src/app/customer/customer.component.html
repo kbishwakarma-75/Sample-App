@@ -1,0 +1,86 @@
+<h1 id="tableLabel">Customer Admin</h1>
+
+<p *ngIf="!customers"><em>Loading...</em></p>
+
+<br />
+
+<button class="btn btn-primary" (click)="addCustomer()">Add New Customer</button>
+
+<div class="row">
+  <div class="col-md-12">
+    <div [formGroup]="formGroup" class="form-row jumbotron mb-4 mr-2" style="padding:15px;">
+
+      <div class="col-4">
+        <label for="FirstName"><span class="asterix">*</span>First Name</label>
+        <input type="text" formControlName="firstName" [ngClass]="{ 'is-invalid': submitted && f.firstName.errors }" id="FirstName" class="form-control" placeholder="First name">
+        <div *ngIf="f.firstName.errors" class="invalid-feedback">
+          <div *ngIf="f.firstName.errors.required">Please enter First Name</div>
+        </div>
+      </div>
+
+      <div class="col-4">
+        <label for="LastName"><span class="asterix">*</span>Last Name</label>
+        <input type="text" formControlName="lastName" [ngClass]="{ 'is-invalid': submitted && f.lastName.errors }" id="LastName" class="form-control" placeholder="Last name">
+        <div *ngIf="f.lastName.errors" class="invalid-feedback">
+          <div *ngIf="f.lastName.errors.required">Please enter Last Name</div>
+        </div>
+      </div>
+
+      <div class="col-4">
+        <label for="Email"><span class="asterix">*</span>Email</label>
+        <input formControlName="email" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" id="Email" class="form-control" placeholder="Email">
+        <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+          <div *ngIf="f.email.errors">Please enter a valid Email</div>
+        </div>
+      </div>
+
+      <div class="col-md-12 bs-linebreak"></div>
+      <hr />
+
+      <div class="col-4">
+        <label for="PhoneNumber">Phone Number</label>
+        <input type="text" formControlName="phoneNumber" [ngClass]="{ 'is-invalid': submitted && f.phoneNumber.errors }" id="PhoneNumber" class="form-control" placeholder="Phone Number">
+      </div>
+
+      <div class="col-4">
+        <label for="BirthMonth">Birth Month</label>
+        <input type="number" min="1" max="12" formControlName="birthMonth" [ngClass]="{ 'is-invalid': submitted && f.birthMonth.errors }" id="BirthMonth" class="form-control" placeholder="Birth Month">
+        <div *ngIf="submitted && f.birthMonth.errors" class="invalid-feedback">
+          <div *ngIf="f.birthMonth.errors">Please enter a valid month (1 - 12)</div>
+        </div>
+      </div>
+
+      <div class="col-4">
+        <label for="BirthYear">Birth Year</label>
+        <input type="number" min="1900" max="2020" formControlName="birthYear" [ngClass]="{ 'is-invalid': submitted && f.birthYear.errors }" id="BirthYear" class="form-control" placeholder="Birth Year">
+        <div *ngIf="submitted && f.birthYear.errors" class="invalid-feedback">
+          <div *ngIf="f.birthYear.errors">Please enter a valid year (1900 - 2020)</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<table class='table table-striped' aria-labelledby="tableLabel" *ngIf="customers">
+  <thead>
+    <tr>
+      <th>First Name</th>
+      <th>Last Name</th>
+      <th>Email</th>
+      <th>Phone Number</th>
+      <th>Birth Month & Year</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let customer of customers">
+      <td>{{ customer.firstName }}</td>
+      <td>{{ customer.lastName }}</td>
+      <td>{{ customer.email }}</td>
+      <td>{{ customer.phoneNumber }}</td>
+      <td>{{ customer.birthMonth }}/{{ customer.birthYear }}</td>
+      <td><button class="btn btn-danger" (click)="deleteCustomer(customer.id)">Delete</button></td>
+    </tr>
+  </tbody>
+</table>
